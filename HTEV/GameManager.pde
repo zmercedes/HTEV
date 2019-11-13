@@ -9,4 +9,8 @@ class GameManager {
   void update(){
     player.update();
   }
+  
+  void setKey(char k, boolean b){
+    player.setKey(k,b);
+  }
 }
