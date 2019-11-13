@@ -12,5 +12,14 @@ void setup(){
 }
 
 void draw(){
+  background(220);
   gm.update();
+}
+
+void keyPressed(){
+  gm.setKey(key, true);
+}
+
+void keyReleased(){
+  gm.setKey(key, false);
 }
