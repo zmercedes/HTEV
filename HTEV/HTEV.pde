@@ -8,6 +8,7 @@ GameManager gm;
 
 void setup(){
   size(400,800);
+  rectMode(CENTER);
   gm = new GameManager();
 }
 
