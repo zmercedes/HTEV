@@ -27,6 +27,9 @@ class Player {
   private boolean backward = false;
   private boolean isFalling = false;
   
+  // fuel gauge
+  private float fuel;
+  
   Player(){
     this.x = width/2;
     this.y = height-50;
