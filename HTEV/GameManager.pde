@@ -2,13 +2,13 @@ class GameManager {
   
   Player player;
   PlatformManager pm;
-  float score;
+  float score = 0;
+  
   boolean climbing = false;
   
   GameManager(){
     player = new Player();
     pm = new PlatformManager(player);
-    score = 0;
   }
   
   void update(){
@@ -18,6 +18,7 @@ class GameManager {
     fill(0);
     textSize(25);
     text("Score: " + score/10, 10,30);
+    text("Fuel:  " + player.fuel, 10,55);
     fill(255);
   }
   
