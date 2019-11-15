@@ -19,6 +19,10 @@ class GameManager {
     textSize(25);
     text("Score: " + score/10, 10,30);
     text("Fuel:  " + player.fuel, 10,55);
+    if(player.crashed){
+      textSize(40);
+      text("Crashed!", 10,90);
+    }
     fill(255);
   }
   
