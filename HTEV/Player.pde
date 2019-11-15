@@ -28,7 +28,9 @@ class Player {
   private boolean isFalling = false;
   
   // fuel gauge
-  private float fuel;
+  private float fuel = 2;
+  private float maxFuel = 4;
+  private boolean crashed = false;
   
   Player(){
     this.x = width/2;
@@ -50,9 +52,16 @@ class Player {
     }
   }
   
+  void addFuel(float amount){
+    if(fuel + amount > maxFuel) fuel = maxFuel;
+    else fuel += amount;
+  }
+  
   void update(){
     this.move();
     this.display();
+    if(fuel <=0) fuel = 0;
+    else if(fuel >= maxFuel) fuel = maxFuel;
   }
   
   void move(){
@@ -64,13 +73,26 @@ class Player {
     isFalling = speedY > 0;
     
     if(y >= ground){
+      
+      if(ground == height - tall/2 && !crashed){
+        if(fuel >=2) fuel -= 2;
+        else crashed = true;
+      } 
       jumping = false;
-      y = ground;
-      speedY = 0;
-      jump();
+      if(!crashed){
+        y = ground;
+        speedY = 0;
+        jump();
+      } else 
+        ground = height + tall;
     } else
       speedY += gravity;
-      
+     
+    if(y >= height + tall){
+      y = ground;
+      speedY = 0;
+    }
+    
     if(y <= height/2){
       y = height/2;
     }
