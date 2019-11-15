@@ -35,7 +35,7 @@ class Platform {
        player.isFalling){
       colliding = true;
       if(!drained){
-        player.fuel += 0.125;
+        player.addFuel(0.125);
         drained = true;
       }
       player.ground = top - player.tall/2;
