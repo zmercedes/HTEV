@@ -10,6 +10,7 @@ class Platform {
   float tall = 20;
   
   boolean colliding = false;
+  boolean drained = false;
   
   Platform(float _x, float _y){
     x = _x;
@@ -33,7 +34,10 @@ class Platform {
        player.left <= right && player.right >= left &&
        player.isFalling){
       colliding = true;
-      
+      if(!drained){
+        player.fuel += 0.125;
+        drained = true;
+      }
       player.ground = top - player.tall/2;
       return true;
     } else if(player.left > right || player.right < left 
