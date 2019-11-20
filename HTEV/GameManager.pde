@@ -1,10 +1,14 @@
+enum GameState {
+  TITLE, GAME, PAUSE, OVER
+}
+
 class GameManager {
   
   Player player;
   PlatformManager pm;
   float score = 0;
-  
   boolean climbing = false;
+  GameState state = GameState.GAME;
   
   GameManager(){
     player = new Player();
@@ -14,14 +18,29 @@ class GameManager {
   void update(){
     player.update();
     pm.update();
-    scoreCounter();
     fill(0);
+    switch(state){
+      case TITLE:
+        break;
+      case GAME:
+        scoreCounter();
+        break;
+      case PAUSE:
+        textSize(40);
+        textAlign(CENTER);
+        text("PAUSED", width/2,height/2);
+        break;
+      case OVER:
+        textSize(40);
+        text("Crashed!", 10,90);
+        break;
+    }
+    textAlign(LEFT);
     textSize(25);
-    text("Score: " + score/10, 10,30);
+    text("Score: " + String.format("%.2f",score), 10,30);
     text("Fuel:  " + player.fuel, 10,55);
     if(player.crashed){
-      textSize(40);
-      text("Crashed!", 10,90);
+      state = GameState.OVER;
     }
     fill(255);
   }
@@ -39,5 +58,22 @@ class GameManager {
   
   void setKey(char k, boolean b){
     player.setKey(k,b);
+  }
+  
+  void setPause(){
+    switch(state){
+      case TITLE:
+        break;
+      case GAME:
+        state = GameState.PAUSE;
+        break;
+      case PAUSE:
+        state = GameState.GAME;
+        break;
+      case OVER:
+        break;
+    }
+    //player.setState(state);
+    //pm.setState(state);
   }
 }
