@@ -32,6 +32,8 @@ class Player {
   private float maxFuel = 4;
   private boolean crashed = false;
   
+  GameState state;
+  
   Player(){
     this.x = width/2;
     this.y = height-50;
@@ -40,6 +42,7 @@ class Player {
     this.top = y - tall/2;
     this.left = x - wide/2;
     this.right = x + wide/2;
+    this.state = GameState.GAME;
   }
   
   void jump(){
@@ -58,8 +61,19 @@ class Player {
   }
   
   void update(){
-    this.move();
-    this.display();
+    switch(state){
+      case TITLE:
+        break;
+      case GAME:
+        this.move();
+        this.display();
+        break;
+      case PAUSE:
+        this.display();
+        break;
+      case OVER:
+        break;
+    }
     if(fuel <=0) fuel = 0;
     else if(fuel >= maxFuel) fuel = maxFuel;
   }
@@ -112,6 +126,10 @@ class Player {
   
   void display(){
     rect(x,y,wide,tall);
+  }
+  
+  void setState(GameState state){
+    this.state = state;
   }
   
   void setKey(char k, boolean b){

@@ -19,6 +19,10 @@ void draw(){
 
 void keyPressed(){
   gm.setKey(key, true);
+  if(keyCode == ESC){
+    key = 0;
+    gm.setPause();
+  }
 }
 
 void keyReleased(){

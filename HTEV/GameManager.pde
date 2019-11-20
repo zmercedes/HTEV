@@ -73,7 +73,7 @@ class GameManager {
       case OVER:
         break;
     }
-    //player.setState(state);
-    //pm.setState(state);
+    player.setState(state);
+    pm.setState(state);
   }
 }
