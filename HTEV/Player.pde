@@ -13,9 +13,9 @@ class Player {
   private float ground = 0;
   
   // movement info
-  private float speedX = 4;
+  private float speedX = 2;
   private float speedY = 0;
-  private float jumpSpeed = -7;
+  private float jumpSpeed = -3.5;
   
   // shape dimensions
   private float wide = 30;
