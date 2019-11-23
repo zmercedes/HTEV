@@ -16,8 +16,11 @@ class GameManager {
   }
   
   void update(){
-    player.update();
-    pm.update();
+    for(int i =0;i<2;i++){
+      player.update();
+      pm.update();
+    }
+    
     fill(0);
     switch(state){
       case TITLE:
@@ -71,6 +74,7 @@ class GameManager {
         state = GameState.GAME;
         break;
       case OVER:
+        exit();
         break;
     }
     player.setState(state);
