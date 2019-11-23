@@ -32,9 +32,8 @@ class PlatformManager {
       if(platform.y >= height + platform.tall){
         platforms.remove(i);
         i--;
-        continue;
-      }
-      platform.display();
+      } else
+        platform.display();
     }
     if(player.isFalling) detectCollision();
   }
