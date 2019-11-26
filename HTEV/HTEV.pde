@@ -3,7 +3,7 @@
  * This game was inspired by Github Game Off 2019.
  * 
  */
-final float gravity = 0.075;
+final float gravity = 0.15;
 GameManager gm;
 
 void setup(){
