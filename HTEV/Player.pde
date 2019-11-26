@@ -26,12 +26,12 @@ class Player {
   private boolean forward = false;
   private boolean backward = false;
   private boolean isFalling = false;
-  private boolean activatingFuel = false;
+  private boolean boosting = false;
   
   // fuel gauge
   private float fuel = 2;
   private float maxFuel = 4;
-  private float fuelActivation = 0;
+  private float booster = 0;
   
   private boolean crashed = false;
   
@@ -53,23 +53,27 @@ class Player {
       jumping = true;
       if(ground == height -25)
         speedY = jumpSpeed * 2;
-      else if(fuelActivation >= 1 && !activatingFuel){
-        float addedJump = (jumpSpeed/2) * fuelActivation;
-        speedY = jumpSpeed + addedJump;
-        fuel -= fuelActivation;
-        fuelActivation = 0;
-      } else
-        speedY = jumpSpeed;
-    }
+      else {
+        ground = height -25;
+        if(booster >= 1 && !boosting){
+          float addedJump = (jumpSpeed/2) * booster;
+          speedY = jumpSpeed + addedJump;
+          fuel -= booster;
+          booster = 0;
+        } else
+          speedY = jumpSpeed;
+      }
+    } 
   }
   
-  void activateFuel(boolean b){
-    if(b) fuelActivation += 0.005;
-    else { 
-      if(fuel >= fuelActivation)
-        fuelActivation = floor(fuelActivation);
-      else
-        fuelActivation = 0;
+  void activateBooster(boolean b){
+    if(b){
+      if(booster >= maxFuel) booster = maxFuel;
+      else booster += 0.005;
+    } else { 
+      booster = floor(booster);
+      if(fuel < booster)
+        booster = 0;
     }
   }
   
@@ -94,6 +98,7 @@ class Player {
     }
     if(fuel <=0) fuel = 0;
     else if(fuel >= maxFuel) fuel = maxFuel;
+    
   }
   
   void move(){
@@ -140,7 +145,7 @@ class Player {
     if(this.backward)
       x -= speedX;
       
-    activateFuel(activatingFuel);
+    activateBooster(boosting);
   }
   
   void display(){
@@ -166,7 +171,7 @@ class Player {
         this.forward = b;
         break;
       case ' ':
-        this.activatingFuel = b; 
+        this.boosting = b; 
         break;
     }
   }
