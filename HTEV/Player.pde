@@ -26,10 +26,13 @@ class Player {
   private boolean forward = false;
   private boolean backward = false;
   private boolean isFalling = false;
+  private boolean activatingFuel = false;
   
   // fuel gauge
   private float fuel = 2;
   private float maxFuel = 4;
+  private float fuelActivation = 0;
+  
   private boolean crashed = false;
   
   GameState state;
@@ -50,8 +53,23 @@ class Player {
       jumping = true;
       if(ground == height -25)
         speedY = jumpSpeed * 2;
-      else
+      else if(fuelActivation >= 1 && !activatingFuel){
+        float addedJump = (jumpSpeed/2) * fuelActivation;
+        speedY = jumpSpeed + addedJump;
+        fuel -= fuelActivation;
+        fuelActivation = 0;
+      } else
         speedY = jumpSpeed;
+    }
+  }
+  
+  void activateFuel(boolean b){
+    if(b) fuelActivation += 0.005;
+    else { 
+      if(fuel >= fuelActivation)
+        fuelActivation = floor(fuelActivation);
+      else
+        fuelActivation = 0;
     }
   }
   
@@ -87,7 +105,6 @@ class Player {
     isFalling = speedY > 0;
     
     if(y >= ground){
-      
       if(ground == height - tall/2 && !crashed){
         if(fuel >=2) fuel -= 2;
         else crashed = true;
@@ -122,6 +139,8 @@ class Player {
     
     if(this.backward)
       x -= speedX;
+      
+    activateFuel(activatingFuel);
   }
   
   void display(){
@@ -145,6 +164,9 @@ class Player {
         break;
       case 'd':
         this.forward = b;
+        break;
+      case ' ':
+        this.activatingFuel = b; 
         break;
     }
   }
