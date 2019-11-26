@@ -35,13 +35,15 @@ class GameManager {
         break;
       case OVER:
         textSize(40);
-        text("Crashed!", 10,90);
+        textAlign(CENTER);
+        text("Crashed!", width/2,height/2);
         break;
     }
     textAlign(LEFT);
     textSize(25);
-    text("Score: " + String.format("%.2f",score), 10,30);
+    text("Height: " + String.format("%.2f",score), 10,30);
     text("Fuel:  " + player.fuel, 10,55);
+    text("Fuel Active: " + String.format("%.2f",player.fuelActivation), 10, 80);
     if(player.crashed){
       state = GameState.OVER;
     }
