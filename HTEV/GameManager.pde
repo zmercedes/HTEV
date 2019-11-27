@@ -13,6 +13,7 @@ class GameManager {
   GameState state;
   
   GameManager(){
+    state = GameState.TITLE;
     reset();
     ui = new UI(player);
   }
@@ -37,17 +38,14 @@ class GameManager {
     ui.update();
     ui.setState(state);
     
-    if(player.crashed){
-      state = GameState.OVER;
+    if(player.crashed) state = GameState.OVER;
       
-    }
     fill(255);
   }
   
   void reset() {
     player = new Player();
     pm = new PlatformManager(player);
-    state = GameState.GAME;
     climbing = false;
     score = 0;
     if(ui != null) ui.player = player;
@@ -70,10 +68,17 @@ class GameManager {
       case ESC:
         key = 0;
         if(state == GameState.OVER) exit();
-        else if(keyPressed) setPause();
+        else if(b) setPause();
         break;
       case ENTER:
-        if(state == GameState.OVER) reset();
+        if(state == GameState.OVER) {
+          state = GameState.GAME;
+          reset();
+        } else if(state == GameState.TITLE)
+          state = GameState.GAME;
+        
+        player.setState(state);
+        pm.setState(state);
         break;
       default:
         player.setKey(k,b);
