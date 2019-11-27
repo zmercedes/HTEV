@@ -3,7 +3,7 @@
  * This game was inspired by Github Game Off 2019.
  * 
  */
-final float gravity = 0.15;
+final float gravity = 0.075;
 GameManager gm;
 
 void setup(){
@@ -19,10 +19,6 @@ void draw(){
 
 void keyPressed(){
   gm.setKey(key, true);
-  if(keyCode == ESC){
-    key = 0;
-    gm.setPause();
-  }
 }
 
 void keyReleased(){
