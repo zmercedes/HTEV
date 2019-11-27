@@ -7,7 +7,7 @@ final float gravity = 0.075;
 GameManager gm;
 
 void setup(){
-  size(400,800);
+  size(400,760);
   rectMode(CENTER);
   gm = new GameManager();
 }
