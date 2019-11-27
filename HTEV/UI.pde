@@ -6,15 +6,23 @@ class UI{
   float barsHeight = 30;
   float barsTall = 20;
   
+  PFont titleFont;
+  PFont smallFont;
+  PFont bigFont;
+  
   UI(Player player){
     this.player = player;
-    this.state = GameState.GAME;
+    this.state = GameState.TITLE;
+    titleFont = loadFont("Aero.vlw");
+    bigFont = loadFont("Ubuntu_big.vlw");
+    smallFont = loadFont("Ubuntu_small.vlw");
   }
   
   void update(){
     fill(0);
     switch(state){
       case TITLE:
+        title();
         break;
       case GAME:
         inGame();
@@ -38,7 +46,23 @@ class UI{
     this.score = newScore;
   }
   
+  void title(){
+    textAlign(CENTER);
+    textFont(titleFont);
+    textSize(50);
+    text("Hop", width/2 - 30,height/6);
+    textSize(25);
+    text("to",width/2 + 40,height/6);
+    textSize(60);
+    text("ESCAPE", width/2 - 30,height/6 + 50);
+    text("VELOCITY", width/2 + 10,height/6 + 100);
+    textFont(bigFont);
+    textSize(25);
+    text("Press Enter to start", width/2,height*.75);
+  }
+  
   void inGame(){
+    textFont(smallFont);
     rect(width/2,30,width-1,60);
     fill(255);
     textAlign(CENTER);
@@ -46,10 +70,13 @@ class UI{
     text("Energy Gauge",width/2,15);
     
     stroke(255);
+    
     for(int i = 1;i<=player.maxFuel;i++){
+      strokeWeight(3);
       fill(0);
       rect((width/4) * i - 50,barsHeight, width/5, barsTall);
       fill(255);
+      strokeWeight(1);
       if(player.fuel >=i) 
         rect((width/4) * i - 50,barsHeight, width/5, barsTall);
       else if(player.fuel < i && player.fuel > i-1){
@@ -76,6 +103,7 @@ class UI{
   }
   
   void paused(){
+    textFont(bigFont);
     fill(0);
     textSize(40);
     textAlign(CENTER);
@@ -83,6 +111,7 @@ class UI{
   }
   
   void gameOver(){
+    textFont(bigFont);
     fill(0);
     textSize(40);
     textAlign(CENTER);
