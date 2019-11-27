@@ -6,21 +6,23 @@ class GameManager {
   
   Player player;
   PlatformManager pm;
+  UI ui;
+  
   float score;
   boolean climbing;
   GameState state;
   
   GameManager(){
     reset();
+    ui = new UI(player);
   }
   
   void update(){
+    
     for(int i =0;i<2;i++){
       player.update();
       pm.update();
     }
-    
-    fill(0);
     switch(state){
       case TITLE:
         break;
@@ -28,24 +30,13 @@ class GameManager {
         scoreCounter();
         break;
       case PAUSE:
-        textSize(40);
-        textAlign(CENTER);
-        text("PAUSED", width/2,height/2);
         break;
       case OVER:
-        textSize(40);
-        textAlign(CENTER);
-        text("Crashed!", width/2,height/2);
-        textSize(25);
-        text("Press Enter to start over", width/2, height/2 + 20);
-        text("Press Esc to quit", width/2, height/2 + 40);
         break;
     }
-    textAlign(LEFT);
-    textSize(25);
-    text("Height: " + String.format("%.2f",score), 10,30);
-    text("Fuel:  " + player.fuel, 10,55);
-    text("Boost: " + String.format("%.2f",player.booster), 10, 80);
+    ui.update();
+    ui.setState(state);
+    
     if(player.crashed){
       state = GameState.OVER;
       
@@ -59,6 +50,7 @@ class GameManager {
     state = GameState.GAME;
     climbing = false;
     score = 0;
+    if(ui != null) ui.player = player;
   }
   
   void scoreCounter(){
@@ -70,6 +62,7 @@ class GameManager {
         score -= player.speedY;
       }
     }
+    ui.setScore(score);
   }
   
   void setKey(char k, boolean b){
@@ -86,7 +79,6 @@ class GameManager {
         player.setKey(k,b);
         break;
     }
-    
   }
   
   void setPause(){
