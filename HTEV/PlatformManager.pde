@@ -9,7 +9,7 @@ class PlatformManager {
     this.platforms = new ArrayList<Platform>();
     float xPos = random(20,width-20);
     this.platforms.add(new Platform(xPos, height -60));
-    this.state = GameState.GAME;
+    this.state = GameState.TITLE;
   }
   
   void update(){
@@ -19,23 +19,25 @@ class PlatformManager {
       case GAME:
         if(player.y == height/2 && !player.isFalling)
           move(-player.speedY);
+          
+        generatePlatform();
+        for(int i = 0; i< platforms.size(); i++){
+          Platform platform = platforms.get(i);
+          
+          if(platform.y >= height + platform.tall){
+            platforms.remove(i);
+            i--;
+          } else
+            platform.display();
+        }
+        if(player.isFalling) detectCollision();
         break;
       case PAUSE:
         break;
       case OVER:
         break;
     }
-    generatePlatform();
-    for(int i = 0; i< platforms.size(); i++){
-      Platform platform = platforms.get(i);
-      
-      if(platform.y >= height + platform.tall){
-        platforms.remove(i);
-        i--;
-      } else
-        platform.display();
-    }
-    if(player.isFalling) detectCollision();
+    
   }
   
   void detectCollision(){

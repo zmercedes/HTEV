@@ -45,7 +45,7 @@ class Player {
     this.top = y - tall/2;
     this.left = x - wide/2;
     this.right = x + wide/2;
-    this.state = GameState.GAME;
+    this.state = GameState.TITLE;
   }
   
   void jump(){
