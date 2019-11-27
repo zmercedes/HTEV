@@ -6,13 +6,12 @@ class GameManager {
   
   Player player;
   PlatformManager pm;
-  float score = 0;
-  boolean climbing = false;
-  GameState state = GameState.GAME;
+  float score;
+  boolean climbing;
+  GameState state;
   
   GameManager(){
-    player = new Player();
-    pm = new PlatformManager(player);
+    reset();
   }
   
   void update(){
@@ -37,17 +36,29 @@ class GameManager {
         textSize(40);
         textAlign(CENTER);
         text("Crashed!", width/2,height/2);
+        textSize(25);
+        text("Press Enter to start over", width/2, height/2 + 20);
+        text("Press Esc to quit", width/2, height/2 + 40);
         break;
     }
     textAlign(LEFT);
     textSize(25);
     text("Height: " + String.format("%.2f",score), 10,30);
     text("Fuel:  " + player.fuel, 10,55);
-    text("Fuel Active: " + String.format("%.2f",player.fuelActivation), 10, 80);
+    text("Boost: " + String.format("%.2f",player.booster), 10, 80);
     if(player.crashed){
       state = GameState.OVER;
+      
     }
     fill(255);
+  }
+  
+  void reset() {
+    player = new Player();
+    pm = new PlatformManager(player);
+    state = GameState.GAME;
+    climbing = false;
+    score = 0;
   }
   
   void scoreCounter(){
@@ -62,23 +73,26 @@ class GameManager {
   }
   
   void setKey(char k, boolean b){
-    player.setKey(k,b);
+    switch(k){
+      case ESC:
+        key = 0;
+        if(state == GameState.OVER) exit();
+        else if(keyPressed) setPause();
+        break;
+      case ENTER:
+        if(state == GameState.OVER) reset();
+        break;
+      default:
+        player.setKey(k,b);
+        break;
+    }
+    
   }
   
   void setPause(){
-    switch(state){
-      case TITLE:
-        break;
-      case GAME:
-        state = GameState.PAUSE;
-        break;
-      case PAUSE:
-        state = GameState.GAME;
-        break;
-      case OVER:
-        exit();
-        break;
-    }
+    if(state == GameState.PAUSE) state = GameState.GAME;
+    else if(state == GameState.GAME) state = GameState.PAUSE;
+    
     player.setState(state);
     pm.setState(state);
   }
