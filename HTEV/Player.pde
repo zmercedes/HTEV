@@ -56,7 +56,7 @@ class Player {
       else {
         ground = height -25;
         if(booster >= 1 && !boosting){
-          float addedJump = (jumpSpeed/2) * booster;
+          float addedJump = jumpSpeed * booster;
           speedY = jumpSpeed + addedJump;
           fuel -= booster;
           booster = 0;
