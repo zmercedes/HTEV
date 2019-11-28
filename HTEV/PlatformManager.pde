@@ -21,23 +21,28 @@ class PlatformManager {
           move(-player.speedY);
           
         generatePlatform();
-        for(int i = 0; i< platforms.size(); i++){
-          Platform platform = platforms.get(i);
-          
-          if(platform.y >= height + platform.tall){
-            platforms.remove(i);
-            i--;
-          } else
-            platform.display();
-        }
+        displayPlatforms();
         if(player.isFalling) detectCollision();
         break;
       case PAUSE:
+        displayPlatforms();
         break;
       case OVER:
         break;
     }
     
+  }
+  
+  void displayPlatforms(){
+    for(int i = 0; i< platforms.size(); i++){
+      Platform platform = platforms.get(i);
+      
+      if(platform.y >= height + platform.tall){
+        platforms.remove(i);
+        i--;
+      } else
+        platform.display();
+    }
   }
   
   void detectCollision(){
