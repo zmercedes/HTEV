@@ -10,12 +10,16 @@ class UI{
   PFont smallFont;
   PFont bigFont;
   
+  boolean start = true;
+  float currentFrame;
+  
   UI(Player player){
     this.player = player;
     this.state = GameState.TITLE;
     titleFont = loadFont("Aero.vlw");
     bigFont = loadFont("Ubuntu_big.vlw");
     smallFont = loadFont("Ubuntu_small.vlw");
+    currentFrame = frameCount + 30;
   }
   
   void update(){
@@ -58,7 +62,13 @@ class UI{
     text("VELOCITY", width/2 + 10,height/6 + 100);
     textFont(bigFont);
     textSize(25);
-    text("Press Enter to start", width/2,height*.75);
+    
+    if(frameCount > currentFrame){
+      start = !start;
+      currentFrame = frameCount + 30;
+    }
+    
+    if(start) text("Press Enter to start", width/2,height*.75);
   }
   
   void inGame(){
