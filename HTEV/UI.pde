@@ -95,7 +95,7 @@ class UI{
       }
       
       if(player.booster > 0){
-        fill(255,255,0);
+        fill(255,127,0);
         if(player.booster >= i) 
           rect((width/4) * i - 50,barsHeight, width/5, barsTall);
         else if(player.booster < i && player.booster > i-1){
@@ -109,7 +109,10 @@ class UI{
     stroke(0);
     fill(255);
     textSize(15);
-    text("Height: " + String.format("%.2f",score), width/2,55);
+    text("Height: " + String.format("%.2f",score*10), width/2 - 70,55);
+    float trueGrav = gravity / 0.075;
+    if(gravity < 0) trueGrav = 0;
+    text("Gravity: " + String.format("%.2f",trueGrav*100)+"%",width/2 + 70, 55);
   }
   
   void paused(){
