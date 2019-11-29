@@ -60,7 +60,14 @@ class GameManager {
         score -= player.speedY;
       }
     }
+    gravityReduction();
     ui.setScore(score);
+  }
+  
+  void gravityReduction(){
+    float gravReduce = score/20000; 
+    if(gravity > 0) gravity = lerp(0.075,0,gravReduce);
+    else gravity = -0.01;
   }
   
   void setKey(char k, boolean b){
