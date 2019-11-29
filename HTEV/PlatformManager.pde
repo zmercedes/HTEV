@@ -20,7 +20,7 @@ class PlatformManager {
         if(player.y == height/2 && !player.isFalling)
           move(-player.speedY);
           
-        generatePlatform();
+        if(gravity > 0) generatePlatform();
         displayPlatforms();
         if(player.isFalling) detectCollision();
         break;
