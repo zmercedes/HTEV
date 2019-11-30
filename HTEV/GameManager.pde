@@ -33,12 +33,13 @@ class GameManager {
       case PAUSE:
         break;
       case OVER:
+        scoreCounter();
         break;
     }
     ui.update();
     ui.setState(state);
     
-    if(player.crashed) state = GameState.OVER;
+    if(player.crashed || gravity < 0) state = GameState.OVER;
       
     fill(255);
   }
@@ -48,6 +49,7 @@ class GameManager {
     pm = new PlatformManager(player);
     climbing = false;
     score = 0;
+    gravity = 0.075;
     if(ui != null) ui.player = player;
   }
   
@@ -65,7 +67,7 @@ class GameManager {
   }
   
   void gravityReduction(){
-    float gravReduce = score/20000; 
+    float gravReduce = score/25000; 
     if(gravity > 0) gravity = lerp(0.075,0,gravReduce);
     else gravity = -0.01;
   }
@@ -82,7 +84,7 @@ class GameManager {
           state = GameState.GAME;
           reset();
         } else if(state == GameState.TITLE)
-          state = GameState.GAME;
+          state = GameState.PAUSE;
         
         player.setState(state);
         pm.setState(state);
