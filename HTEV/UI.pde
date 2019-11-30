@@ -69,6 +69,15 @@ class UI{
     }
     
     if(start) text("Press Enter to start", width/2,height*.75);
+    acknowledgement();
+  }
+  
+  void acknowledgement(){
+    textFont(bigFont);
+    textSize(18);
+    text("A game by Zoilo Mercedes", width/2, height*.9);
+    text("for Github Game Off 2019", width/2, height*.92);
+    text("github.com/zmercedes", width/2, height*.94);
   }
   
   void inGame(){
@@ -121,16 +130,33 @@ class UI{
     textSize(40);
     textAlign(CENTER);
     text("PAUSED", width/2,height/2);
+    textSize(30);
+    text("Controls:", width/2, height*.6);
+    textSize(22);
+    text("A to move left   D to move right", width/2, height*.64);
+    text("Space bar to engage booster", width/2, height*.68);
+    text("Esc to pause/unpause", width/2, height*.72);
   }
   
   void gameOver(){
     textFont(bigFont);
     fill(0);
-    textSize(40);
+    
     textAlign(CENTER);
-    text("Crashed!", width/2,height/2);
-    textSize(25);
-    text("Press Enter to start over", width/2, height/2 + 20);
-    text("Press Esc to quit", width/2, height/2 + 40);
+    if(gravity < 0){
+      textSize(25);
+      text("You've escaped the planet!",width/2,height/2);
+      textSize(20);
+      text("Thank you for playing!",width/2, height*.6);
+      text("Press Enter to try again", width/2, height*.6 + 20);
+      text("Press Esc to quit", width/2, height*.6 + 40);
+      acknowledgement();
+    } else {
+      textSize(40);
+      text("Crashed!", width/2,height/2);
+      textSize(25);
+      text("Press Enter to start over", width/2, height/2 + 20);
+      text("Press Esc to quit", width/2, height/2 + 40);
+    }
   }
 }
