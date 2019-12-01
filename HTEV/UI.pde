@@ -51,6 +51,7 @@ class UI{
   }
   
   void title(){
+    fill(255);
     textAlign(CENTER);
     textFont(titleFont);
     textSize(50);
@@ -126,7 +127,7 @@ class UI{
   
   void paused(){
     textFont(bigFont);
-    fill(0);
+    fill(255);
     textSize(40);
     textAlign(CENTER);
     text("PAUSED", width/2,height/2);
@@ -140,7 +141,7 @@ class UI{
   
   void gameOver(){
     textFont(bigFont);
-    fill(0);
+    fill(255);
     
     textAlign(CENTER);
     if(gravity < 0){
