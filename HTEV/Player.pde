@@ -21,6 +21,11 @@ class Player {
   private float wide = 30;
   private float tall = 50;
   
+  // Animation
+  Animation rocket_noflame;
+  Animation rocket_flame;
+  int updateCounter = 0;
+  
   // player state
   private boolean jumping = false;
   private boolean forward = false;
@@ -46,6 +51,8 @@ class Player {
     this.left = x - wide/2;
     this.right = x + wide/2;
     this.state = GameState.TITLE;
+    rocket_noflame = new Animation("rocketship/rocket_nf_",4);
+    rocket_flame = new Animation("rocketship/rocket_f_",4);
   }
   
   void jump(){
@@ -83,12 +90,13 @@ class Player {
   }
   
   void update(){
+    updateCounter = (updateCounter+1) % 2;
     switch(state){
       case TITLE:
         break;
       case GAME:
         this.move();
-        this.display();
+        if(updateCounter == 1) this.display();
         break;
       case PAUSE:
         this.display();
@@ -102,6 +110,7 @@ class Player {
   }
   
   void move(){
+    
     y += speedY;
     bottom = y + tall/2;
     top = y - tall/2;
@@ -149,7 +158,18 @@ class Player {
   }
   
   void display(){
-    rect(x,y,wide,tall);
+    //rect(x,y,wide,tall);
+    if(!isFalling){
+      if(forward) rocket_flame.displayRight(x,y);
+      else if(backward) rocket_flame.displayLeft(x,y);
+      else rocket_flame.display(x,y);
+      rocket_noflame.frame = rocket_flame.frame;
+    } else {
+      if(forward) rocket_noflame.displayRight(x,y);
+      else if(backward) rocket_noflame.displayLeft(x,y);
+      else rocket_noflame.display(x,y);
+      rocket_flame.frame = rocket_noflame.frame;
+    }
   }
   
   void setState(GameState state){
