@@ -7,6 +7,10 @@ class GameManager {
   Player player;
   PlatformManager pm;
   UI ui;
+  PImage planet;
+  PImage space;
+  float planetx;
+  float planety;
   
   float score;
   boolean climbing;
@@ -16,28 +20,44 @@ class GameManager {
     state = GameState.TITLE;
     reset();
     ui = new UI(player);
+    space = loadImage("space/milkyway.jpg");
+    planet = loadImage("world/globe.png");
+    planetx = random(20, width -20);
+    planety = height/2;
   }
   
   void update(){
+    imageMode(CENTER);
+    image(space,width/2, height/2);
+    imageMode(CORNER);
     
-    for(int i =0;i<2;i++){
-      player.update();
-      pm.update();
-    }
     switch(state){
       case TITLE:
+        image(planet,0,height*.2);
         break;
       case GAME:
         scoreCounter();
+        imageMode(CENTER);
+        image(planet,planetx, planety);
+        imageMode(CORNER);
         break;
       case PAUSE:
+        imageMode(CENTER);
+        image(planet,planetx, planety);
+        imageMode(CORNER);
         break;
       case OVER:
         scoreCounter();
         break;
     }
+    for(int i =0;i<2;i++){
+      player.update();
+      pm.update();
+    }
+    
     ui.update();
     ui.setState(state);
+    
     
     if(player.crashed || gravity < 0) state = GameState.OVER;
       
@@ -70,6 +90,10 @@ class GameManager {
     float gravReduce = score/25000; 
     if(gravity > 0) gravity = lerp(0.075,0,gravReduce);
     else gravity = -0.01;
+  }
+  
+  void planetMove(){
+    
   }
   
   void setKey(char k, boolean b){
